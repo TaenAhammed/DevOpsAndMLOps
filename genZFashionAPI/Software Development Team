@@ -1,0 +1,22 @@
+Software Development Team
+
+Planning => Backlog => Sprint Start (Todo =)
+
+Planning (Business Analyst, Product Owner, Scrum Master)
+- Gather requirements
+- Define user stories (Agile: Epic, Story, Task => Sub Tasks) 
+- Put it in the backlog(TerraGrunt) [future xplorable] (bucket list). Infrastructure as Code (Terraform). 
+    Already adopted at your organization. (EC2 Launch for the dev environment of the [genZfashionAPI]).
+    Repeatation of Terraform modules across multiple projects.
+    TerraGrunt (Terraform code reusability & Modularity is hudge).
+    Quarter planning of the deliverables(already fixed):
+    Q1, q2 (current), q3(c), q4 (bonus sprint, hachathon)
+- Prioritize backlog (estimation).
+  Each story/tasks/sub-tasks has some points (1(easy => can be done within a few hours), 2(day), 3(2-3 day), 5(week))
+- Create sprint backlog. (choosed tickets)
+Sprint Planning and Estimation (capacity valuation: 25-30)
+
+# This whole process depends on the SDLC with organization structure and practices
+- Todo () => [in progress () => waiting ()] => Testing/SQA Approval => Done.
+
+
