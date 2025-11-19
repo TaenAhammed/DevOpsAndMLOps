@@ -19,6 +19,9 @@ services:
       - gen_network
     env_file:
       - ./genZFashionAPI/.env
+    volumes:
+      - ./genZFashionAPI:/app
+      - /app/node_modules
     depends_on:
       - db
 

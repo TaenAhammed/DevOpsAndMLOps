@@ -25,7 +25,7 @@ if (process.env.NODE_ENV !== 'test') {
 
 // Routes
 app.get('/', (req, res) => {
-  res.send('GenZ Fashion API');
+  res.send('GenZ Fashion API!');
 });
 
 app.use('/api/users', userRoutes);
