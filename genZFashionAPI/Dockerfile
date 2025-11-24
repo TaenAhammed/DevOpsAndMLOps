@@ -1,5 +1,5 @@
 FROM node:krypton-alpine
-LABEL "maintainer": "Taen Ahammed"
+LABEL maintainer="Taen Ahammed"
 
 WORKDIR /app
 
