@@ -18,3 +18,19 @@ jobs:
 
       - name: Test command
         run: echo "Hello"
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+      
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+      
+      - name: Build
+        uses: docker/build-push-action@v6
+        with:
+          push: false
+          tags: taen/client:latest
+          context: ./my-app
+          file: ./my-app/Dockerfile
+          target: builder
+          
