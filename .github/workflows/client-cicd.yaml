@@ -3,7 +3,7 @@ name: Client CI/CD
 on:
   push:
     branches:
-      - dev
+      - main
     paths:
       - my-app
 
