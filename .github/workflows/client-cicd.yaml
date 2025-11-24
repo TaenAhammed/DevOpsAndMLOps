@@ -5,7 +5,8 @@ on:
     branches:
       - main
     paths:
-      - my-app
+      - 'my-app/**'
+      - '.github/workflows/client-cicd.yaml'
 
 jobs:
   build:
