@@ -9,8 +9,9 @@ on:
       - '.github/workflows/server-cicd.yaml'
 
 jobs:
-  build:
+  build-push:
     runs-on: ubuntu-latest
+    name: Build and Push Docker Image
 
     steps:
       - name: Checkout
@@ -27,13 +28,21 @@ jobs:
         with:
           username: ${{ vars.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_PASSWORD }}
+
+      - name: Docker metadata
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: taen/server
+          tags: |
+            type=ref,event=branch
+            type=semver,pattern={{version}}
+            type=semver,pattern={{major}}.{{minor}}
       
-      - name: Build
+      - name: Build and Push
         uses: docker/build-push-action@v6
         with:
-          push: false
-          tags: taen/server:latest
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
           context: ./genZFashionAPI
           file: ./genZFashionAPI/Dockerfile
-
-          
