@@ -1,0 +1,33 @@
+name: Server CI/CD
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'genZFashionAPI/**'
+      - '.github/workflows/server-cicd.yaml'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+      
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+      
+      - name: Build
+        uses: docker/build-push-action@v6
+        with:
+          push: false
+          tags: taen/server:latest
+          context: ./genZFashionAPI
+          file: ./genZFashionAPI/Dockerfile
+
+          
