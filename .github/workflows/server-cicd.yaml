@@ -35,7 +35,6 @@ jobs:
         with:
           images: taen/server
           tags: |
-            type=ref,event=branch
             type=semver,pattern={{version}}
             type=semver,pattern={{major}}.{{minor}}
             type=raw,value={{branch}}-{{sha}}
