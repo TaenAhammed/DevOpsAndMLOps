@@ -9,5 +9,15 @@ terraform {
 }
 
 provider "aws" {
-  # Configuration options
+  region = "ap-southeast-1"
+  profile = "ido"
+}
+
+resource "aws_s3_bucket" "genzfashion-product-photos" {
+  bucket = "genzfashion-product-photos"
+
+  tags = {
+    Name        = "genzfashion-product-photos"
+    Environment = "Dev"
+  }
 }
