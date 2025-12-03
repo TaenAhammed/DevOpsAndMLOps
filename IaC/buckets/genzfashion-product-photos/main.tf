@@ -30,3 +30,11 @@ resource "aws_s3_bucket" "genzfashion-product-photos" {
     Environment = "Dev"
   }
 }
+
+resource "aws_s3_bucket_versioning" "genzfashion-product-photos-versioning" {
+  bucket = aws_s3_bucket.genzfashion-product-photos.id
+
+  versioning_configuration {
+    status = "Enabled"
+  }
+}
