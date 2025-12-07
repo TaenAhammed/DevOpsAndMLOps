@@ -31,10 +31,17 @@ resource "aws_s3_bucket" "genzfashion-product-photos" {
   }
 }
 
-resource "aws_s3_bucket_versioning" "genzfashion-product-photos-versioning" {
+# add bucket policy to move objects to Glacier after 30 days
+resource "aws_s3_bucket_lifecycle_configuration" "genzfashion-product-photos-lifecycle" {
   bucket = aws_s3_bucket.genzfashion-product-photos.id
 
-  versioning_configuration {
+  rule {
+    id     = "move-to-glacier"
     status = "Enabled"
+
+    transition {
+      days          = 30
+      storage_class = "GLACIER" 
+    }
   }
 }
