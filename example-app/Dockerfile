@@ -28,4 +28,6 @@ RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cac
 
 EXPOSE 8000
 
-CMD ["php-fpm"]
+# Run PHP built-in server for a simple HTTP endpoint. Not suitable for high-traffic
+# production use, but fine for local testing or when host nginx reverse-proxies to it.
+CMD ["php", "-S", "0.0.0.0:8000", "-t", "/var/www/html/public"]
