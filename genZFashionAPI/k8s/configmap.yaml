@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: genzfashion-config
+data:
+  DB_NAME: genZFashionDB
+  DB_HOST: mongodb.dev.svc.cluster.local
+  DB_PORT: "27017"

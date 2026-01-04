@@ -1,0 +1,121 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: genzfashion-secrets
+type: Opaque
+data:
+  db-username: YWRtaW4=  # base64 encoded 'admin'
+  db-password: cGFzc3dvcmQ=  # base64 encoded 'password'
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: genzfashion-config
+data:
+  DB_NAME: genzfashiondb
+  DB_HOST: mongodb.genzfashion.svc.cluster.local
+  DB_PORT: "27017"
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: genzfashion-api
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: genzfashion-api
+  template:
+    metadata:
+      labels:
+        app: genzfashion-api
+    spec:
+      containers:
+      - name: genzfashion-api
+        image: your-docker-repo/genzfashion-api:latest
+        ports:
+        - containerPort: 3000
+        env:
+        - name: DB_NAME
+          valueFrom:
+            configMapKeyRef:
+              name: genzfashion-config
+              key: DB_NAME
+        - name: DB_HOST
+          valueFrom:
+            configMapKeyRef:
+              name: genzfashion-config
+              key: DB_HOST
+        - name: DB_PORT
+          valueFrom:
+            configMapKeyRef:
+              name: genzfashion-config
+              key: DB_PORT
+        - name: DB_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: genzfashion-secrets
+              key: db-username
+        - name: DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: genzfashion-secrets
+              key: db-password
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 3000
+          initialDelaySeconds: 10
+          periodSeconds: 5
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 3000
+          initialDelaySeconds: 10
+          periodSeconds: 5
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "250m"
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: genzfashion-api-service
+spec:
+  selector:
+    app: genzfashion-api
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 3000
+  type: LoadBalancer
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: genzfashion-api-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  rules:
+  - host: genzfashion.example.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: genzfashion-api-service
+            port:
+              number: 80
+  tls:
+  - hosts:
+    - genzfashion.example.com
+    secretName: genzfashion-tls # Pre-created TLS secret
+---
