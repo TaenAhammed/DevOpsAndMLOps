@@ -45,10 +45,7 @@ spec:
               name: genzfashion-secrets
               key: db-password
         - name: MONGODB_URI
-          valueFrom:
-            secretKeyRef:
-              name: genzfashion-secrets
-              key: mongodb-uri
+          value: "mongodb://$(DB_USERNAME):$(DB_PASSWORD)@$(DB_HOST):$(DB_PORT)/$(DB_NAME)?authSource=admin"
         readinessProbe:
           httpGet:
             path: /
