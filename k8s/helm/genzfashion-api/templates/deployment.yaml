@@ -45,11 +45,11 @@ spec:
               containerPort: {{ .Values.service.port }}
               protocol: TCP
           env:
-            - name: MONGO_URI
+            - name: MONGODB_URI
               valueFrom:
                 secretKeyRef:
                   name: {{ include "genzfashion-api.fullname" . }}-secret
-                  key: mongo-uri
+                  key: MONGODB_URI
           {{- with .Values.livenessProbe }}
           livenessProbe:
             {{- toYaml . | nindent 12 }}
