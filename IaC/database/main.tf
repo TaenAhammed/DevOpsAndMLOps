@@ -68,7 +68,7 @@ resource "aws_docdb_cluster" "ido_docdb_serverless_dev" {
 
   serverless_v2_scaling_configuration {
     min_capacity = 0.5 # DCU
-    max_capacity = 2.0 # DCU
+    max_capacity = 1.0 # DCU
   }
 
   tags = {
