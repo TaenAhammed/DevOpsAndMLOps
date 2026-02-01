@@ -5,7 +5,7 @@ data "aws_vpc" "app-vpc" {
   }
 }
 
-data "aws_subnets" "app_subnets" {
+data "aws_subnets" "app_subnets" { # aws_private/docdb _subnets could be a better name
   filter {
     name   = "tag:Name"
     values = ["app-vpc-private-*"]
