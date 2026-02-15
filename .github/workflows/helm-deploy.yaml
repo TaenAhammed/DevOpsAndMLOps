@@ -29,7 +29,8 @@ jobs:
           echo "${{ secrets.KUBECONFIG }}" > kubeconfig
           export KUBECONFIG=$(pwd)/kubeconfig
 
-          kubectl get nodes
-          helm list -A
+          cd ./k8s/helm/genzfashion-api
+          helm install genzfashion-api .
+        
 
           
