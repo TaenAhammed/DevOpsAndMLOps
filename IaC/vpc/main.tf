@@ -40,9 +40,9 @@ resource "aws_route_table" "main-route-table" {
 
 # Create a public subnet
 resource "aws_subnet" "public-subnet-1" {
-  vpc_id            = aws_vpc.main-vpc.id
-  cidr_block        = "10.0.1.0/24" # Subnet IP Range: 10.0.1.0 - 10.0.1.255
-  availability_zone = "ap-southeast-1a"
+  vpc_id                  = aws_vpc.main-vpc.id
+  cidr_block              = "10.0.1.0/24" # Subnet IP Range: 10.0.1.0 - 10.0.1.255
+  availability_zone       = "ap-southeast-1a"
   map_public_ip_on_launch = true
 }
 
@@ -95,14 +95,14 @@ resource "aws_security_group" "allow_web" {
 }
 
 resource "aws_key_pair" "local_ssh" {
-  key_name = "ido"
+  key_name   = "ido"
   public_key = file("~/.ssh/ido.pub")
 }
 
 resource "aws_instance" "genz-fashion-dev" {
-  ami = "ami-00d8fc944fb171e29" # Ubuntu Server 24.04 LTS 64-bit x86 (ami-00d8fc944fb171e29) in ap-southeast-1
-  instance_type = "t3.micro"
-  subnet_id = aws_subnet.public-subnet-1.id
+  ami                    = "ami-00d8fc944fb171e29" # Ubuntu Server 24.04 LTS 64-bit x86 (ami-00d8fc944fb171e29) in ap-southeast-1
+  instance_type          = "t3.micro"
+  subnet_id              = aws_subnet.public-subnet-1.id
   vpc_security_group_ids = [aws_security_group.allow_web.id]
 
   key_name = aws_key_pair.local_ssh.key_name

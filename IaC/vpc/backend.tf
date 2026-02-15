@@ -8,7 +8,7 @@ terraform {
   required_version = "v1.14.0"
 
   backend "s3" {
-    bucket       = "devops-course-tfstate-demo"
+    bucket       = "ido-tfstate"
     key          = "dev/networking/vpc"
     region       = "ap-southeast-1"
     profile      = "ido"
