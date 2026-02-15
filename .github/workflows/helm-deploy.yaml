@@ -1,4 +1,4 @@
-name: Client CI/CD
+name: Helm Deploy
 
 on:
   push:
@@ -6,6 +6,7 @@ on:
       - main
 jobs:
   build:
+    name: Deploy to k3s
     runs-on: ubuntu-latest
 
     steps:
@@ -22,10 +23,13 @@ jobs:
       - name: STS
         run: aws sts get-caller-identity
 
-      # - name: Install Helm
-      #   run: |
-      #     curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
-      
-      # - name: Deploy to k3s
+      - name: Deploy to k3s
+        run: |
+          # Read kubeconfig from repo secret and save to file
+          echo "${{ secrets.KUBECONFIG }}" > kubeconfig
+          export KUBECONFIG=$(pwd)/kubeconfig
+
+          kubectl get nodes
+          helm list -A
 
           
